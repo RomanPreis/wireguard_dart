@@ -35,7 +35,7 @@ abstract class WireguardDartPlatform extends PlatformInterface {
   }
 
   Future<void> setupTunnel(
-      {required String bundleId, required String tunnelName, String? win32ServiceName}) {
+      {required String bundleId, required String tunnelName, required String serverAddress, String? win32ServiceName}) {
     throw UnimplementedError('setupTunnel() has not been implemented');
   }
 

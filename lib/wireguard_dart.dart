@@ -14,9 +14,16 @@ class WireguardDart {
   }
 
   Future<void> setupTunnel(
-      {required String bundleId, required String tunnelName, String? win32ServiceName}) {
+      {required String bundleId,
+      required String tunnelName,
+      required String serverAddress,
+      String? win32ServiceName}) {
     return WireguardDartPlatform.instance.setupTunnel(
-        bundleId: bundleId, tunnelName: tunnelName, win32ServiceName: win32ServiceName);
+      bundleId: bundleId,
+      tunnelName: tunnelName,
+      win32ServiceName: win32ServiceName,
+      serverAddress: serverAddress,
+    );
   }
 
   Future<void> connect({required String cfg}) {
@@ -35,14 +42,16 @@ class WireguardDart {
     return WireguardDartPlatform.instance.statusStream();
   }
 
-  Future<bool> checkTunnelConfiguration({required String bundleId, required String tunnelName}) {
+  Future<bool> checkTunnelConfiguration(
+      {required String bundleId, required String tunnelName}) {
     return WireguardDartPlatform.instance.checkTunnelConfiguration(
       bundleId: bundleId,
       tunnelName: tunnelName,
     );
   }
 
-  Future<void> removeTunnelConfiguration({required String bundleId, required String tunnelName}) {
+  Future<void> removeTunnelConfiguration(
+      {required String bundleId, required String tunnelName}) {
     return WireguardDartPlatform.instance.removeTunnelConfiguration(
       bundleId: bundleId,
       tunnelName: tunnelName,

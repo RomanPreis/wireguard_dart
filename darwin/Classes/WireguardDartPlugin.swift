@@ -78,7 +78,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
             Task {
                 do {
                     vpnManager = try await setupProviderManager(
-                        bundleId: bundleId, tunnelName: tunnelName)
+                        bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress)
                     Logger.main.debug("Tunnel setup OK")
                     result("")
                 } catch {
@@ -278,7 +278,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    func setupProviderManager(bundleId: String, tunnelName: String) async throws
+    func setupProviderManager(bundleId: String, tunnelName: String,serverAddress) async throws
         -> NETunnelProviderManager
     {
         let mgrs = try await NETunnelProviderManager.loadAllFromPreferences()
@@ -289,18 +289,18 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
         let mgr = existingMgr ?? NETunnelProviderManager()
 
         try await configureManager(
-            mgr: mgr, bundleId: bundleId, tunnelName: tunnelName)
+            mgr: mgr, bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress)
 
         return mgr
     }
 
     func configureManager(
-        mgr: NETunnelProviderManager, bundleId: String, tunnelName: String
+        mgr: NETunnelProviderManager, bundleId: String, tunnelName: String,serverAddress:String
     ) async throws {
         mgr.localizedDescription = tunnelName
         let proto = NETunnelProviderProtocol()
         proto.providerBundleIdentifier = bundleId
-        proto.serverAddress = ""  // must be non-null
+        proto.serverAddress = serverAddress
         mgr.protocolConfiguration = proto
         mgr.isEnabled = true
 
