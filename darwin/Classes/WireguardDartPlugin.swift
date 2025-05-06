@@ -77,6 +77,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
             !tunnelName.isEmpty
             else {
                 result(nativeFlutterError(message: "required argument: serverAddress"))
+                return
             }
             Logger.main.debug(
                 "Tunnel bundle ID: \(bundleId), name: \(tunnelName)")
@@ -245,6 +246,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
             !tunnelName.isEmpty
             else {
                 result(nativeFlutterError(message: "required argument: serverAddress"))
+                return
             }
                 checkTunnelConfiguration(bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress)
             { manager in
@@ -274,6 +276,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
                 !tunnelName.isEmpty
                 else {
                     result(nativeFlutterError(message: "required argument: serverAddress"))
+                    return
                 }
             Task {
                 do {
