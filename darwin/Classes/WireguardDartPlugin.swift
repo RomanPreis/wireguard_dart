@@ -229,7 +229,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
             } else {
                 result(ConnectionStatus.unknown.string())
             }
-        case "checkTunnelConfiguration":
+        case "gg":
             guard let args = call.arguments as? [String: Any],
                 let bundleId = args["bundleId"] as? String, !bundleId.isEmpty
             else {
@@ -355,7 +355,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
     }
 
     func checkTunnelConfiguration(
-        bundleId: String, tunnelName: String, serverAddress: String, configuration: String
+        bundleId: String, tunnelName: String, serverAddress: String, configuration: String,
         result: @escaping (NETunnelProviderManager?) -> Void
     ) {
         Task {
