@@ -79,12 +79,18 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
                 result(nativeFlutterError(message: "required argument: serverAddress"))
                 return
             }
+            guard let configuration = args["configuration"] as? String,
+            !tunnelName.isEmpty
+            else {
+                result(nativeFlutterError(message: "required argument: serverAddress"))
+                return
+            }
             Logger.main.debug(
                 "Tunnel bundle ID: \(bundleId), name: \(tunnelName)")
             Task {
                 do {
                     vpnManager = try await setupProviderManager(
-                        bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress)
+                        bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress,configuration:configuration)
                     Logger.main.debug("Tunnel setup OK")
                     result("")
                 } catch {
@@ -297,7 +303,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    func setupProviderManager(bundleId: String, tunnelName: String,serverAddress: String) async throws
+    func setupProviderManager(bundleId: String, tunnelName: String,serverAddress: String, configuration:String) async throws
         -> NETunnelProviderManager
     {
         let mgrs = try await NETunnelProviderManager.loadAllFromPreferences()
@@ -308,18 +314,19 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
         let mgr = existingMgr ?? NETunnelProviderManager()
 
         try await configureManager(
-            mgr: mgr, bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress)
+            mgr: mgr, bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress, configuration:configuration)
 
         return mgr
     }
 
     func configureManager(
-        mgr: NETunnelProviderManager, bundleId: String, tunnelName: String,serverAddress:String
+        mgr: NETunnelProviderManager, bundleId: String, tunnelName: String,serverAddress:String, configuration: String
     ) async throws {
         mgr.localizedDescription = tunnelName
         let proto = NETunnelProviderProtocol()
         proto.providerBundleIdentifier = bundleId
         proto.serverAddress = serverAddress
+        proto.providerConfiguration = ["wireGuardConfiguration": configuration]
         mgr.protocolConfiguration = proto
         mgr.isEnabled = true
 

@@ -34,12 +34,14 @@ class MethodChannelWireguardDart extends WireguardDartPlatform {
       {required String bundleId,
       required String tunnelName,
       required String serverAddress,
+      required String configuration,
       String? win32ServiceName}) async {
     final args = {
       'bundleId': bundleId,
       'tunnelName': tunnelName,
       if (win32ServiceName != null) 'win32ServiceName': win32ServiceName,
       'serverAddress': serverAddress,
+      'configuration': configuration,
     };
     await methodChannel.invokeMethod<void>('setupTunnel', args);
   }

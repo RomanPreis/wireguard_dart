@@ -17,12 +17,14 @@ class WireguardDart {
       {required String bundleId,
       required String tunnelName,
       required String serverAddress,
+      required String configuration,
       String? win32ServiceName}) {
     return WireguardDartPlatform.instance.setupTunnel(
       bundleId: bundleId,
       tunnelName: tunnelName,
       win32ServiceName: win32ServiceName,
       serverAddress: serverAddress,
+      configuration: configuration,
     );
   }
 
