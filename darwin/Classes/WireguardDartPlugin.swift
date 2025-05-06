@@ -278,7 +278,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
             Task {
                 do {
                     try await removeTunnelConfiguration(
-                        bundleId: bundleId, tunnelName: tunnelName,serverAddress: serverAddress)
+                        bundleId: bundleId, tunnelName: tunnelName)
                     result(true)
                 } catch {
                     result(
