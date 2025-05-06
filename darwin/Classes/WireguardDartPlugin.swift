@@ -278,7 +278,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    func setupProviderManager(bundleId: String, tunnelName: String,serverAddress) async throws
+    func setupProviderManager(bundleId: String, tunnelName: String,serverAddress: String) async throws
         -> NETunnelProviderManager
     {
         let mgrs = try await NETunnelProviderManager.loadAllFromPreferences()
