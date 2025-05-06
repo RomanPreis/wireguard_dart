@@ -254,12 +254,13 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
                 result(nativeFlutterError(message: "required argument: serverAddress"))
                 return
             }
-            guard let serverAddress = args["configuration"] as? String,
+            guard let configuration = args["configuration"] as? String,
             !tunnelName.isEmpty
             else {
                 result(nativeFlutterError(message: "required argument: configuration"))
                 return
             }
+        
                 checkTunnelConfiguration(bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress, configuration: configuration)
             { manager in
                 if let vpnManager = manager {
