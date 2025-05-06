@@ -339,7 +339,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
     }
 
     func checkTunnelConfiguration(
-        bundleId: String, tunnelName: String,
+        bundleId: String, tunnelName: String, serverAddress: String,
         result: @escaping (NETunnelProviderManager?) -> Void
     ) {
         Task {
@@ -348,7 +348,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
                     bundleId: bundleId, tunnelName: tunnelName)
                 if let mgr = mgr {
                     try await configureManager(
-                        mgr: mgr, bundleId: bundleId, tunnelName: tunnelName)
+                        mgr: mgr, bundleId: bundleId, tunnelName: tunnelName, serverAddress: serverAddress)
                 }
                 result(mgr)
             } catch {
@@ -366,7 +366,6 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
         if let existingMgr = mgrs.first(where: {
             ($0.protocolConfiguration as? NETunnelProviderProtocol)?
                 .providerBundleIdentifier == bundleId
-                && $0.localizedDescription == tunnelName
         }) {
             try await withCheckedThrowingContinuation {
                 (continuation: CheckedContinuation<Void, Error>) in
