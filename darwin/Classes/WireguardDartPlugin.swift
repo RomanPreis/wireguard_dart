@@ -241,7 +241,12 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
                 )
                 return
             }
-            checkTunnelConfiguration(bundleId: bundleId, tunnelName: tunnelName)
+            guard let serverAddress = args["serverAddress"] as? String,
+            !tunnelName.isEmpty
+            else {
+                result(nativeFlutterError(message: "required argument: serverAddress"))
+            }
+                checkTunnelConfiguration(bundleId: bundleId, tunnelName: tunnelName,serverAddress:serverAddress)
             { manager in
                 if let vpnManager = manager {
                     self.vpnManager = vpnManager
@@ -256,6 +261,7 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
             guard let args = call.arguments as? [String: Any],
                 let bundleId = args["bundleId"] as? String, !bundleId.isEmpty,
                 let tunnelName = args["tunnelName"] as? String,
+                  
                 !tunnelName.isEmpty
             else {
                 result(
@@ -264,10 +270,15 @@ public class WireguardDartPlugin: NSObject, FlutterPlugin {
                             "required arguments: 'bundleId' and 'tunnelName'"))
                 return
             }
+                guard let serverAddress = args["serverAddress"] as? String,
+                !tunnelName.isEmpty
+                else {
+                    result(nativeFlutterError(message: "required argument: serverAddress"))
+                }
             Task {
                 do {
                     try await removeTunnelConfiguration(
-                        bundleId: bundleId, tunnelName: tunnelName)
+                        bundleId: bundleId, tunnelName: tunnelName,serverAddress: serverAddress)
                     result(true)
                 } catch {
                     result(
