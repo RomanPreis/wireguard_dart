@@ -42,19 +42,27 @@ class WireguardDart {
     return WireguardDartPlatform.instance.statusStream();
   }
 
-  Future<bool> checkTunnelConfiguration(
-      {required String bundleId, required String tunnelName}) {
+  Future<bool> checkTunnelConfiguration({
+    required String bundleId,
+    required String tunnelName,
+    required String serverAddress,
+  }) {
     return WireguardDartPlatform.instance.checkTunnelConfiguration(
       bundleId: bundleId,
       tunnelName: tunnelName,
+      serverAddress: serverAddress,
     );
   }
 
-  Future<void> removeTunnelConfiguration(
-      {required String bundleId, required String tunnelName}) {
+  Future<void> removeTunnelConfiguration({
+    required String bundleId,
+    required String tunnelName,
+    required String serverAddress,
+  }) {
     return WireguardDartPlatform.instance.removeTunnelConfiguration(
       bundleId: bundleId,
       tunnelName: tunnelName,
+      serverAddress: serverAddress,
     );
   }
 

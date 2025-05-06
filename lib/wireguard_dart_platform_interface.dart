@@ -35,7 +35,10 @@ abstract class WireguardDartPlatform extends PlatformInterface {
   }
 
   Future<void> setupTunnel(
-      {required String bundleId, required String tunnelName, required String serverAddress, String? win32ServiceName}) {
+      {required String bundleId,
+      required String tunnelName,
+      required String serverAddress,
+      String? win32ServiceName}) {
     throw UnimplementedError('setupTunnel() has not been implemented');
   }
 
@@ -58,12 +61,19 @@ abstract class WireguardDartPlatform extends PlatformInterface {
   Future<bool> checkTunnelConfiguration({
     required String bundleId,
     required String tunnelName,
+    required String serverAddress,
   }) {
-    throw UnimplementedError('checkTunnelConfiguration() has not been implemented');
+    throw UnimplementedError(
+        'checkTunnelConfiguration() has not been implemented');
   }
 
-  Future<void> removeTunnelConfiguration({required String bundleId, required String tunnelName}) {
-    throw UnimplementedError('removeTunnelConfiguration() has not been implemented');
+  Future<void> removeTunnelConfiguration({
+    required String bundleId,
+    required String tunnelName,
+    required String serverAddress,
+  }) {
+    throw UnimplementedError(
+        'removeTunnelConfiguration() has not been implemented');
   }
 
   Future<TunnelStatistics?> getTunnelStatistics() {
